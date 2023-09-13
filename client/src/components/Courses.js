@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 /** retrieves list of courses from /api/courses and renders it
  * renders course w/ link to their "Course Detail"
@@ -25,10 +26,10 @@ const Courses = () => {
         <div className="wrap main--grid">
         {courses.map((course) => {
           return (
-          <a className="course--module course--link" href="course-detail.html">
+          <NavLink className="course--module course--link" to={`courses/${course.id}`} key={course.id}>
             <h2 className="course--label">Course</h2>
-            <h3 className="course--title" key={course.id}>{course.title}</h3>
-          </a>
+            <h3 className="course--title" >{course.title}</h3>
+          </NavLink>
           )
         })}
         </div>

@@ -4,16 +4,18 @@
  * OR user's name + button for "signing out" w/ Auth User
  */
 
+import { NavLink, Link } from "react-router-dom";
 const Header = () => {
 
     return (
         <header>
             <div className="wrap header--flex">
-                <h1 className="header--logo"><a href="index.html">Courses</a></h1>
+                <h1 className="header--logo"><Link href="/">Courses</Link></h1>
                 <nav>
+                {/**TERNARY OPERATOR FOR AUTH USER HERE  */}
                     <ul className="header--signedout">
-                        <li><a href="sign-up.html">Sign Up</a></li>
-                        <li><a href="sign-in.html">Sign In</a></li>
+                        <li><NavLink to="/signup">Sign Up</NavLink></li>
+                        <li><NavLink href="/signin">Sign In</NavLink></li>
                     </ul>
                     {/**
                 ORRRRR

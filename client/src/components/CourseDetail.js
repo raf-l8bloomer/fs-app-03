@@ -26,7 +26,8 @@ const CourseDetail = () => {
 
     return (
         <>
-            <div className="actions--bar">
+            <div>{course}</div>
+            {/* <div className="actions--bar">
                 <div className="wrap">
                     <a className="button" href="update-course.html">Update Course</a>
                     <a className="button" href="#">Delete Course</a>
@@ -39,7 +40,7 @@ const CourseDetail = () => {
                     <div className="main--flex">
                         <div>
                             <h3 className="course--detail--title">Course</h3>
-                            <h4 className="course--name" key={course.id}> {course.title}</h4>
+                            <h4 className="course--name" key={course.id}>name</h4>
                             <p>by {course.id}</p>
                             <p>{course.description}</p>
                         </div>
@@ -58,7 +59,7 @@ const CourseDetail = () => {
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> */}
         </>
     )
 

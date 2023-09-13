@@ -1,35 +1,30 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios"
+import React from "react";
+import { Route, Routes } from "react-router-dom"
+
+import Header from "./components/Header";
+import Courses from "./components/Courses";
+import CreateCourse from "./components/CreateCourse";
+import UpdateCourse from "./components/UpdateCourse";
+import CourseDetail from "./components/CourseDetail";
+import UserSignIn from "./components/UserSignIn";
+import UserSignUp from "./components/UserSignUp";
+import UserSignOut from "./components/UserSignOut";
 
 function App() {
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/courses")
-      .then(response => {
-        // handle success
-        setCourses(response.data);
-      })
-      .catch(error => {
-        // handle error
-        console.log("Error fetching and parsing data", error);
-      })
-  }, [])
-
 
   return (
     <div id="root">
+      <Header />
       <main>
-      <div className="wrap main--grid">
-        {courses.map((course) => {
-          return (
-          <a className="course--module course--link" href="course-detail.html">
-            <h2 className="course--label">Course</h2>
-            <h3 className="course--title" key={course.id}>{course.title}</h3>
-          </a>
-          )
-        })}
-        </div>
+        <Routes>
+          <Route path="/" element={<Courses />} />
+          <Route path="/courses/create" element={<CreateCourse />} />
+          <Route path="/courses/:id/update" element={<UpdateCourse />} />
+          <Route path="/courses/:id" element={<CourseDetail />} />
+          <Route path="/signin" element={<UserSignIn />} />
+          <Route path="/signup" element={<UserSignUp />} />
+          <Route path="/signout" element={<UserSignOut />} />
+        </Routes>
       </main>
 
     </div>

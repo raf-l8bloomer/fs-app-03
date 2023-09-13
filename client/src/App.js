@@ -14,19 +14,25 @@ function App() {
         // handle error
         console.log("Error fetching and parsing data", error);
       })
-    },[])
+  }, [])
 
 
   return (
-    <>
-    <ul>
-      {courses.map((course) => {
-        return(
-          <li>{course.title}</li>
-        )
-      })}
-    </ul>
-    </>
+    <div id="root">
+      <main>
+      <div className="wrap main--grid">
+        {courses.map((course) => {
+          return (
+          <a className="course--module course--link" href="course-detail.html">
+            <h2 className="course--label">Course</h2>
+            <h3 className="course--title" key={course.id}>{course.title}</h3>
+          </a>
+          )
+        })}
+        </div>
+      </main>
+
+    </div>
   );
 }
 

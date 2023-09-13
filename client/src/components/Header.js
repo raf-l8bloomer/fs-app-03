@@ -10,12 +10,12 @@ const Header = () => {
     return (
         <header>
             <div className="wrap header--flex">
-                <h1 className="header--logo"><Link href="/">Courses</Link></h1>
+                <h1 className="header--logo"><Link to="/">Courses</Link></h1>
                 <nav>
                 {/**TERNARY OPERATOR FOR AUTH USER HERE  */}
                     <ul className="header--signedout">
                         <li><NavLink to="/signup">Sign Up</NavLink></li>
-                        <li><NavLink href="/signin">Sign In</NavLink></li>
+                        <li><NavLink to="/signin">Sign In</NavLink></li>
                     </ul>
                     {/**
                 ORRRRR

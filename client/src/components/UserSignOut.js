@@ -4,3 +4,8 @@
  * redirects user to list of courses
  */
 
+const UserSignOut = () => {
+
+}
+
+export default UserSignOut;

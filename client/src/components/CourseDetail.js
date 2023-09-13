@@ -50,7 +50,9 @@ const CourseDetail = () => {
                             <h3 className="course--detail--title">Materials Needed</h3>
                             <ul className="course--detail--list">
                                 {course.map((thisCourse) => {
+                                    return(
                                     <li>{thisCourse.materialsNeeded}</li>
+                                    )
                                 })}
                             </ul>
                         </div>

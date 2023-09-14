@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import axios from "axios";
 
 /**
@@ -26,12 +26,11 @@ const CourseDetail = () => {
 
     return (
         <>
-            <div>{course}</div>
-            {/* <div className="actions--bar">
+            <div className="actions--bar">
                 <div className="wrap">
-                    <a className="button" href="update-course.html">Update Course</a>
-                    <a className="button" href="#">Delete Course</a>
-                    <a className="button button-secondary" href="/">Return to List</a>
+                    <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
+                    <Link className="button" to="#">Delete Course</Link>
+                    <Link className="button button-secondary" to="/">Return to List</Link>
                 </div>
             </div>
             <div className="wrap">
@@ -47,19 +46,19 @@ const CourseDetail = () => {
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
                             <p>{course.estimatedTime}</p>
-                            
+
                             <h3 className="course--detail--title">Materials Needed</h3>
                             <ul className="course--detail--list">
                                 {course.map((thisCourse) => {
-                                    return(
-                                    <li>{thisCourse.materialsNeeded}</li>
+                                    return (
+                                        <li>{thisCourse.materialsNeeded}</li>
                                     )
                                 })}
                             </ul>
                         </div>
                     </div>
                 </form>
-            </div> */}
+            </div>
         </>
     )
 

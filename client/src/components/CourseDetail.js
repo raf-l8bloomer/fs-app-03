@@ -13,7 +13,8 @@ const CourseDetail = () => {
     const [course, setCourse] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/courses/${courseId}`)
+        async function fetchData() {
+         await axios.get(`http://localhost:5000/api/courses/${courseId.id}`)
             .then(response => {
                 setCourse(response.data)
                 // handle success
@@ -22,10 +23,16 @@ const CourseDetail = () => {
                 // handle error
                 console.log("Error fetching and parsing data in Course Detail", error);
             })
+        }
+
+        fetchData();
     }, [courseId]);
+
 
     return (
         <>
+        {course ? ( 
+            <>
             <div className="actions--bar">
                 <div className="wrap">
                     <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
@@ -40,7 +47,7 @@ const CourseDetail = () => {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name" key={course.id}>name</h4>
-                            <p>by {course.id}</p>
+                            <p>by {course.id.firstName}</p>
                             <p>{course.description}</p>
                         </div>
                         <div>
@@ -49,16 +56,16 @@ const CourseDetail = () => {
 
                             <h3 className="course--detail--title">Materials Needed</h3>
                             <ul className="course--detail--list">
-                                {course.map((thisCourse) => {
-                                    return (
-                                        <li>{thisCourse.materialsNeeded}</li>
-                                    )
-                                })}
+                                        <li>{course.materialsNeeded}</li>
                             </ul>
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> 
+            </>
+            ) : (
+                <p>course is still null...</p>
+            )}
         </>
     )
 

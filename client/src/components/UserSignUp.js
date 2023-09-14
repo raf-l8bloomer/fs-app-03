@@ -14,14 +14,19 @@ const UserSignUp = () => {
 
             <form>
                 <label for="firstName">First Name</label>
-                <input id="firstName" name="firstName" type="text" value="" />
+                <input id="firstName" name="firstName" type="text" />
                 <label for="lastName">Last Name</label>
-                <input id="lastName" name="lastName" type="text" value="" />
+                <input id="lastName" name="lastName" type="text" />
                 <label for="emailAddress">Email Address</label>
-                <input id="emailAddress" name="emailAddress" type="email" value="" />
+                <input id="emailAddress" name="emailAddress" type="email" />
                 <label for="password">Password</label>
-                <input id="password" name="password" type="password" value="" />
-                <button className="button" type="submit">Sign Up</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                <input id="password" name="password" type="password" />
+                <button className="button" type="submit">Sign Up</button><button className="button button-secondary" 
+                onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href= '/';
+                }}
+                >Cancel</button>
             </form>
             <p>Already have a user account? Click here to <a href="sign-in.html">sign in</a>!</p>
         </div>

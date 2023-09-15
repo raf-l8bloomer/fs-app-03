@@ -30,7 +30,7 @@ export const UserProvider = (props) => {
     }
 
     const signOut = () => {
-
+        setAuthUser(null);
     }
 
     return (

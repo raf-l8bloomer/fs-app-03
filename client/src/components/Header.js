@@ -9,7 +9,7 @@ import UserContext from "../context/UserContext";
 import { useContext } from "react";
 
 const Header = () => {
-    const { user } = useContext(UserContext);
+    const { authUser } = useContext(UserContext);
 
     return (
         <header>
@@ -17,10 +17,10 @@ const Header = () => {
                 <h1 className="header--logo"><Link to="/">Courses</Link></h1>
                 <nav>
                     {/**TERNARY OPERATOR FOR AUTH USER HERE  */}
-                    {user ? (
-                        <ul class="header--signedin">
-                            <li>Welcome, {user}</li>
-                            <li><Link to="sign-out.html">Sign Out</Link></li>
+                    {authUser ? (
+                        <ul className="header--signedin">
+                            <li>Welcome, {authUser.name}</li>
+                            <li><Link to="/signout">Sign Out</Link></li>
                         </ul>
                     ) : (
                         <ul className="header--signedout">

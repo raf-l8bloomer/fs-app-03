@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Routes,  } from "react-router-dom"
-import UserContext from "./context/UserContext";
+
 
 import Header from "./components/Header";
 import Courses from "./components/Courses";
@@ -12,24 +12,8 @@ import UserSignUp from "./components/UserSignUp";
 import UserSignOut from "./components/UserSignOut";
 
 function App() {
-const [user, setUser]=useState(null);
-
-const signInUser = (username, password) => {
-  const newUser = {
-    username,
-    password
-  };
-  setUser(newUser)
-}
-
-const signOutUser = () => {
-  setUser(null);
-}
-
-
 
   return (
-    <UserContext.Provider value={{user}}>
       <div id="root">
         <Header />
         <main>
@@ -44,7 +28,6 @@ const signOutUser = () => {
           </Routes>
         </main>
       </div>
-    </UserContext.Provider>
 
   );
 }

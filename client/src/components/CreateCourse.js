@@ -23,17 +23,20 @@ const CreateCourse = () => {
         e.preventDefault();
 
         const course = {
-            courseTitle: courseTitle.current.value,
-            courseDescription: courseDescription.current.value,
+            title: courseTitle.current.value,
+            description: courseDescription.current.value,
             estimatedTime: estimatedTime.current.value,
             materialsNeeded: materialsNeeded.current.value,
-            // userId: userId
-        }
+            userId: authUser.userId
+         }
+
+        const encodedCredentials = btoa(`${authUser.emailAddress}:${authUser.password}`);
 
         const fetchOptions = {
             method: "POST",
             headers: {
-                "Content-Type":"application/json; charset=utf-8"
+                "Content-Type":"application/json; charset=utf-8",
+                Authorization: `Basic ${encodedCredentials}`
             },
             body: JSON.stringify(course)
         }
@@ -86,7 +89,7 @@ const CreateCourse = () => {
                             ref={courseTitle}
                         />
 
-                        <p>By Joe Smith</p>
+                        <p>By {authUser.firstName} {authUser.lastName}</p>
 
                         <label htmlFor="courseDescription">Course Description</label>
                         <textarea

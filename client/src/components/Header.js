@@ -16,10 +16,9 @@ const Header = () => {
             <div className="wrap header--flex">
                 <h1 className="header--logo"><Link to="/">Courses</Link></h1>
                 <nav>
-                    {/**TERNARY OPERATOR FOR AUTH USER HERE  */}
                     {authUser ? (
                         <ul className="header--signedin">
-                            <li>Welcome, {authUser.name}</li>
+                            <li>Welcome, {authUser.firstName}</li>
                             <li><Link to="/signout">Sign Out</Link></li>
                         </ul>
                     ) : (

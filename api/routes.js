@@ -9,7 +9,13 @@ const { authenticateUser } = require('./middleware/auth-user');
 // Return all properties & values for currently authenticated User + 200 status 
 router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
     const user = req.currentUser;
-    res.status(200).json({ name: user.firstName, username: user.emailAddress, password: user.password, userId: user.id });
+    res.status(200).json({ 
+        firstName: user.firstName,
+        lastName: user.lastName, 
+        emailAddress: user.emailAddress, 
+        password: user.password, 
+        userId: user.id 
+    });
 }));
 
 router.post('/users', asyncHandler(async (req, res) => {
@@ -49,11 +55,8 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
     try {
         let course;
-        course = await Course.create({
-            title: req.body.title,
-            description: req.body.description,
-            userId: req.body.userId
-        });
+        course = await Course.create(req.body);
+        console.log(req.body);
         res.location(`courses/${course.id}`).status(201).end();
     } catch (error) {
         error400Handler(error, res);
@@ -67,11 +70,7 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
 router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {
     try {
         const course = await Course.findByPk(req.params.id);
-        await course.update({
-            title: req.body.title,
-            description: req.body.description,
-            userId: req.body.userId
-        })
+        await course.update(req.body)
         res.status(204).end();
     } catch (error) {
         error400Handler(error, res);

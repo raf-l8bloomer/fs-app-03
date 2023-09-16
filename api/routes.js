@@ -9,7 +9,7 @@ const { authenticateUser } = require('./middleware/auth-user');
 // Return all properties & values for currently authenticated User + 200 status 
 router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
     const user = req.currentUser;
-    res.status(200).json({ name: user.firstName, username: user.emailAddress });
+    res.status(200).json({ name: user.firstName, username: user.emailAddress, password: user.password, userId: user.id });
 }));
 
 router.post('/users', asyncHandler(async (req, res) => {

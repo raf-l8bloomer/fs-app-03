@@ -27,6 +27,7 @@ const CreateCourse = () => {
             courseDescription: courseDescription.current.value,
             estimatedTime: estimatedTime.current.value,
             materialsNeeded: materialsNeeded.current.value,
+            // userId: userId
         }
 
         const fetchOptions = {
@@ -74,7 +75,7 @@ const CreateCourse = () => {
             </div> 
             ) : null }
 
-            <form onSubmit={authUser ? (handleSubmit) : null}>
+            <form onSubmit={handleSubmit}>
                 <div className="main--flex">
                     <div>
                         <label htmlFor="courseTitle">Course Title</label>

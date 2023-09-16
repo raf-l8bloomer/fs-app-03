@@ -21,7 +21,8 @@ const UserSignIn = () => {
 
         const credentials = {
             emailAddress: emailAddress.current.value,
-            password: password.current.value
+            password: password.current.value,
+
         }
 
         try {

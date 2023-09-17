@@ -3,7 +3,7 @@
  * renders "Update Course" button that sends PUT request to /api/courses/:id
  * renders "Cancel" button that returns to "Course Detail" 
  */
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/UserContext";
@@ -12,14 +12,18 @@ const UpdateCourse = () => {
     const { authUser } = useContext(UserContext);
     const navigate = useNavigate();
     const courseId = useParams();
-    const [course, setCourse] = useState(null);
-    console.log(course);
 
-    const courseTitle = useRef(null);
-    const courseDescription = useRef(null);
-    const estimatedTime = useRef(null);
-    const materialsNeeded = useRef(null);
+    // const courseTitle = usevalue(null);
+    // const courseDescription = usevalue(null);
+    // const estimatedTime = usevalue(null);
+    // const materialsNeeded = usevalue(null);
+    const [course, setCourse] = useState(null);
     const [errors, setErrors] = useState([]);
+
+    const [courseTitle, setCourseTitle] = useState("");
+    const [courseDescription, setCourseDescription] = useState("");
+    const [estimatedTime, setEstimatedTime] = useState("");
+    const [materialsNeeded, setMaterialsNeeded] = useState("");
 
 
     useEffect(() => {
@@ -27,7 +31,13 @@ const UpdateCourse = () => {
             await axios.get(`http://localhost:5000/api/courses/${courseId.id}`)
                 .then(response => {
                     // handle success
-                    setCourse(response.data)
+                    console.log("This is the response:", response.data);
+                    const data = response.data;
+                    setCourse(response);
+                    setCourseTitle(data.title);
+                    setCourseDescription(data.description);
+                    setEstimatedTime(data.estimatedTime);
+                    setMaterialsNeeded(data.materialsNeeded);
                 })
                 .catch(error => {
                     // handle error
@@ -41,10 +51,10 @@ const UpdateCourse = () => {
         e.preventDefault();
 
         const course = {
-            title: courseTitle.current.value,
-            description: courseDescription.current.value,
-            estimatedTime: estimatedTime.current.value,
-            materialsNeeded: materialsNeeded.textContent,
+            title: courseTitle.defaultValue,
+            description: courseDescription.defaultValue,
+            estimatedTime: estimatedTime.defaultValue,
+            materialsNeeded: materialsNeeded.defaultValue,
             userId: authUser.userId
         }
 
@@ -60,10 +70,10 @@ const UpdateCourse = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/api/courses${courseId.id}`, fetchOptions);
-            if (response.status) {
-                console.log("course was updated!" + courseId)
-                navigate(`/courses/${course.courseId}`);
+            const response = await fetch(`http://localhost:5000/api/courses/${courseId.id}`, fetchOptions);
+            if (response.status === 204) {
+                console.log("course was updated!")
+                navigate(`/courses/${courseId.id}`);
             } else if (response.status === 400) {
                 const data = await response.json();
                 setErrors(data.errors);
@@ -93,16 +103,16 @@ const UpdateCourse = () => {
                             id="courseTitle"
                             name="courseTitle"
                             type="text"
-                            ref={courseTitle}
+                            defaultValue={courseTitle}
                         />
 
-                        <p>By Joe Smith</p>
+                        <p>By {authUser.firstName} {authUser.lastName}</p>
 
                         <label htmlFor="courseDescription">Course Description</label>
                         <textarea
                             id="courseDescription"
                             name="courseDescription"
-                            ref={courseDescription}
+                            defaultValue={courseDescription}
                         ></textarea>
                     </div>
                     <div>
@@ -111,16 +121,17 @@ const UpdateCourse = () => {
                             id="estimatedTime"
                             name="estimatedTime"
                             type="text"
-                            ref={estimatedTime}
+                            defaultValue={estimatedTime}
+                            
                         />
 
                         <label htmlFor="materialsNeeded">Materials Needed</label>
-                        <textarea 
-                        id="materialsNeeded" 
-                        name="materialsNeeded"
-                        useRef={materialsNeeded}
-                        >* 1/2 x 3/4 inch parting strip&#13;&#13;* 1 x 2 common pine&#13;&#13;* 1 x 4 common pine&#13;&#13;* 1 x 10 common pine&#13;&#13;* 1/4 inch thick lauan plywood&#13;&#13;* Finishing Nails&#13;&#13;* Sandpaper&#13;&#13;* Wood Glue&#13;&#13;* Wood Filler&#13;&#13;* Minwax Oil Based Polyurethane
-                        </textarea>
+                        <textarea
+                            id="materialsNeeded"
+                            name="materialsNeeded"
+                            defaultValue={materialsNeeded}
+
+                        ></textarea>
                     </div>
                 </div>
                 <button className="button" type="submit">Update Course</button>

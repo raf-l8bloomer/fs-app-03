@@ -20,10 +20,14 @@ const UpdateCourse = () => {
     const [course, setCourse] = useState(null);
     const [errors, setErrors] = useState([]);
 
+    // setting the input and text area fields with their course data
+
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
+
+    // then we have to replace these fields with any updates
 
 
     useEffect(() => {
@@ -51,11 +55,11 @@ const UpdateCourse = () => {
         e.preventDefault();
 
         const course = {
-            title: courseTitle.defaultValue,
-            description: courseDescription.defaultValue,
-            estimatedTime: estimatedTime.defaultValue,
-            materialsNeeded: materialsNeeded.defaultValue,
-            userId: authUser.userId
+
+            title: courseTitle,
+            description: courseDescription,
+            estimatedTime,
+            materialsNeeded,
         }
 
         const encodedCredentials = btoa(`${authUser.emailAddress}:${authUser.password}`);
@@ -72,7 +76,7 @@ const UpdateCourse = () => {
         try {
             const response = await fetch(`http://localhost:5000/api/courses/${courseId.id}`, fetchOptions);
             if (response.status === 204) {
-                console.log("course was updated!")
+                console.log("course updated!")
                 navigate(`/courses/${courseId.id}`);
             } else if (response.status === 400) {
                 const data = await response.json();
@@ -103,7 +107,8 @@ const UpdateCourse = () => {
                             id="courseTitle"
                             name="courseTitle"
                             type="text"
-                            defaultValue={courseTitle}
+                            value={courseTitle}
+                            onChange={(e) => setCourseTitle(e.target.value)}
                         />
 
                         <p>By {authUser.firstName} {authUser.lastName}</p>
@@ -112,7 +117,8 @@ const UpdateCourse = () => {
                         <textarea
                             id="courseDescription"
                             name="courseDescription"
-                            defaultValue={courseDescription}
+                            value={courseDescription}
+                            onChange={(e) => setCourseDescription(e.target.value)}
                         ></textarea>
                     </div>
                     <div>
@@ -121,16 +127,16 @@ const UpdateCourse = () => {
                             id="estimatedTime"
                             name="estimatedTime"
                             type="text"
-                            defaultValue={estimatedTime}
-                            
+                            value={estimatedTime}
+                            onChange={(e) => setEstimatedTime(e.target.value)}                            
                         />
 
                         <label htmlFor="materialsNeeded">Materials Needed</label>
                         <textarea
                             id="materialsNeeded"
                             name="materialsNeeded"
-                            defaultValue={materialsNeeded}
-
+                            value={materialsNeeded}
+                            onChange={(e) => setMaterialsNeeded(e.target.value)}
                         ></textarea>
                     </div>
                 </div>

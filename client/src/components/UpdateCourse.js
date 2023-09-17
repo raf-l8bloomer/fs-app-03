@@ -13,21 +13,13 @@ const UpdateCourse = () => {
     const navigate = useNavigate();
     const courseId = useParams();
 
-    // const courseTitle = usevalue(null);
-    // const courseDescription = usevalue(null);
-    // const estimatedTime = usevalue(null);
-    // const materialsNeeded = usevalue(null);
     const [course, setCourse] = useState(null);
     const [errors, setErrors] = useState([]);
-
-    // setting the input and text area fields with their course data
 
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
-
-    // then we have to replace these fields with any updates
 
 
     useEffect(() => {
@@ -94,7 +86,6 @@ const UpdateCourse = () => {
         e.preventDefault();
         navigate("/");
     }
-
 
     return (
         <div className="wrap">

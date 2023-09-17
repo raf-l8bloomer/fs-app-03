@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom"
+import ReactMarkdown from "react-markdown"
 import axios from "axios";
 
 import UserContext from "../context/UserContext";
@@ -54,7 +55,6 @@ const CourseDetail = () => {
             console.log(error);
 
         }
-
     }
 
     return (
@@ -81,16 +81,17 @@ const CourseDetail = () => {
                                     <h3 className="course--detail--title">Course</h3>
                                     <h4 className="course--name" key={course.id}>{course.title}</h4>
                                     <p>by {course.courseOwner.firstName} {course.courseOwner.lastName}</p>
-                                    <p>{course.description}</p>
+                                    <ReactMarkdown children={course.description}></ReactMarkdown>
                                 </div>
                                 <div>
                                     <h3 className="course--detail--title">Estimated Time</h3>
                                     <p>{course.estimatedTime}</p>
-
                                     <h3 className="course--detail--title">Materials Needed</h3>
                                     <ul className="course--detail--list">
-                                        <li>{course.materialsNeeded}</li>
+                                   <ReactMarkdown children = {course.materialsNeeded}>
+                                   </ReactMarkdown> 
                                     </ul>
+
                                 </div>
                             </div>
                         </form>
@@ -101,7 +102,6 @@ const CourseDetail = () => {
             )}
         </>
     )
-
 };
 
 export default CourseDetail;

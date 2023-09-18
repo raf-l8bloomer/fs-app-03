@@ -74,8 +74,10 @@ const UserSignUp = () => {
             {errors.length ? (
                 <div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <ul>
-                        <li>{errors}</li>
+                    <ul> {errors.map((error) => {
+                        return<li>{error}</li>
+                    })
+                    }
                     </ul>
                 </div>
             ) : null}

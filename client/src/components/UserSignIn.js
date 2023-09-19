@@ -9,17 +9,23 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 const UserSignIn = () => {
+    // imports Sign In function in User Context
     const { actions } = useContext(UserContext);
+    // setting up navigate for routing
     const navigate = useNavigate();
+    // sets location hook
     const location = useLocation();
 
+    // sets User info state
     const emailAddress = useRef(null);
     const password = useRef(null);
     const [errors, setErrors] = useState([]);
 
+    // Signs in User
     const handleSubmit = async (e) => {
         e.preventDefault();
         let from = "/";
+        // if previous path exists, sends User over to saved location after signing in
         if (location.state) {
             from = location.state.from;
         }
@@ -45,16 +51,19 @@ const UserSignIn = () => {
 
     }
 
+    // returns a list of errors in JSX if validation fails
+
     const errorKey = (errorArray) => {
         console.log(errorArray);
         const errorList = []
-        for( let i = 0; i < errorArray.length; i++) {
+        for (let i = 0; i < errorArray.length; i++) {
             console.log(errorArray[i]);
-             errorList.push(<li key={i}> {errorArray[i]} </li> )
+            errorList.push(<li key={i}> {errorArray[i]} </li>)
         }
         return errorList
     }
 
+    // sends user to courses home if 'cancel' is clicked
     const handleCancel = (e) => {
         e.preventDefault();
         navigate("/");

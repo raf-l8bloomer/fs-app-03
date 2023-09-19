@@ -3,13 +3,19 @@ import Cookies from "js-cookie"
 
 const UserContext = createContext(null);
 
-
+// settomg up provider so that all components have access to the user info
 export const UserProvider = (props) => {
+    // sets cookie and pulls authenticatedUser
     const cookie = Cookies.get("authenticatedUser");
+
+    // sets User state and initializes it with saved, signed in user from cookie
     const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
 
+    // receives Users credentials and encodes it
     const signIn = async (credentials) => {
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
+       
+       // sends Get request to pull users data for matching 
         const fetchOptions = {
             method: "GET",
             headers: {
@@ -34,6 +40,7 @@ export const UserProvider = (props) => {
     }
 
 
+    // sets user to null and removes the saved user from cookie
     const signOut = () => {
         setAuthUser(null);
         Cookies.remove("authenticatedUser");

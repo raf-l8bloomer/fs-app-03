@@ -9,8 +9,10 @@ import UserContext from "../context/UserContext";
 import { useContext } from "react";
 
 const Header = () => {
+    // Pulls Authenticated User from UserContext
     const { authUser } = useContext(UserContext);
 
+    // renders header with user's name
     return (
         <header>
             <div className="wrap header--flex">

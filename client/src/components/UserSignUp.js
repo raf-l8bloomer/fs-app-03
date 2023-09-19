@@ -11,17 +11,20 @@ import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 const UserSignUp = () => {
+    // imports Sign In function from User Context
     const { actions } = useContext(UserContext);
+    // setting up navigate for routing
     const navigate = useNavigate();
 
-    // State
+    // user states
     const firstName = useRef(null);
     const lastName = useRef(null);
     const emailAddress = useRef(null);
     const password = useRef(null);
+
     const [errors, setErrors] = useState([]);
 
-    // event handlers
+    // submits inputted user info for sign up
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -31,6 +34,8 @@ const UserSignUp = () => {
             emailAddress: emailAddress.current.value,
             password: password.current.value,
         }
+
+        // sends Post request to add user into User database
         const fetchOptions = {
             method: "POST",
             headers: {
@@ -39,11 +44,11 @@ const UserSignUp = () => {
             body: JSON.stringify(user)
         }
 
-
         try {
             const response = await fetch("http://localhost:5000/api/users", fetchOptions);
             if (response.status === 201) {
                 console.log(`${user.emailAddress} is successfully signed up and authenticated!`)
+                // sign in user immmediately after signing up
                 await actions.signIn(user);
                 navigate('/');
             } else if (response.status === 400) {
@@ -55,20 +60,21 @@ const UserSignUp = () => {
         } catch (error) {
             console.log(error);
             navigate("/")
-
         }
     }
 
+    // returns a list of errors in JSX if validation fails
     const errorKey = (errorArray) => {
         console.log(errorArray);
         const errorList = []
-        for( let i = 0; i < errorArray.length; i++) {
+        for (let i = 0; i < errorArray.length; i++) {
             console.log(errorArray[i]);
-             errorList.push(<li key={i}> {errorArray[i]} </li> )
+            errorList.push(<li key={i}> {errorArray[i]} </li>)
         }
         return errorList
     }
 
+    // sends user to courses home if 'cancel' is clicked
     const handleCancel = (e) => {
         e.preventDefault();
         navigate("/")

@@ -9,46 +9,54 @@ import axios from "axios";
 import UserContext from "../context/UserContext";
 
 const UpdateCourse = () => {
+    // Pulls Authenticated User from UserContext
     const { authUser } = useContext(UserContext);
+    // setting up navigate for routing
     const navigate = useNavigate();
+    // Pulls course information by course id
     const courseId = useParams();
 
+    // course and errors states
     const [course, setCourse] = useState(null);
     const [errors, setErrors] = useState([]);
 
+    // course detail states 
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
 
-
     useEffect(() => {
         async function fetchData() {
-            await axios.get(`http://localhost:5000/api/courses/${courseId.id}`)
-                .then(response => {
-                    // handle success
-                    console.log("This is the response:", response.data);
-                    const data = response.data;
+
+            // Fetches the specific course by id and sets it to course state
+            try {
+                const response = await axios.get(`http://localhost:5000/api/courses/${courseId.id}`)
+                const fetchedCourse = response.data
+                // if Authorized User doesn't match the Course Owner, sends user to Forbidden page
+                if (response.data.courseOwner.id !== authUser.userId) {
+                    navigate("/forbidden");
+                } else {
                     setCourse(response);
-                    setCourseTitle(data.title);
-                    setCourseDescription(data.description);
-                    setEstimatedTime(data.estimatedTime);
-                    setMaterialsNeeded(data.materialsNeeded);
-                })
-                .catch(error => {
-                    // handle error
-                    console.log("Error fetching and parsing data in Course Detail", error);
-                    navigate("*")
-                })
+                    setCourseTitle(fetchedCourse.title);
+                    setCourseDescription(fetchedCourse.description);
+                    setEstimatedTime(fetchedCourse.estimatedTime);
+                    setMaterialsNeeded(fetchedCourse.materialsNeeded);
+                }
+            } catch (error) {
+                console.log("Error fetching and parsing data in Course Detail", error);
+                navigate("/notfound")
+            }
         }
         fetchData();
-    }, [courseId, navigate]);
+    }, [courseId, navigate, authUser]);
 
+
+    // sets edited input fields to the current course upon submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const course = {
-
             title: courseTitle,
             description: courseDescription,
             estimatedTime,
@@ -57,6 +65,7 @@ const UpdateCourse = () => {
 
         const encodedCredentials = btoa(`${authUser.emailAddress}:${authUser.password}`);
 
+        // sends a Put request while checking if Authorized User is = to the Course Owner
         const fetchOptions = {
             method: "PUT",
             headers: {
@@ -83,16 +92,19 @@ const UpdateCourse = () => {
         }
     }
 
+    // returns a list of errors in JSX if validation fails
+
     const errorKey = (errorArray) => {
         console.log(errorArray);
         const errorList = []
-        for( let i = 0; i < errorArray.length; i++) {
+        for (let i = 0; i < errorArray.length; i++) {
             console.log(errorArray[i]);
-             errorList.push(<li key={i}> {errorArray[i]} </li> )
+            errorList.push(<li key={i}> {errorArray[i]} </li>)
         }
         return errorList
     }
 
+    // sends user to courses home if 'cancel' is clicked
     const handleCancel = (e) => {
         e.preventDefault();
         navigate("/");
@@ -136,7 +148,7 @@ const UpdateCourse = () => {
                             name="estimatedTime"
                             type="text"
                             value={estimatedTime}
-                            onChange={(e) => setEstimatedTime(e.target.value)}                            
+                            onChange={(e) => setEstimatedTime(e.target.value)}
                         />
 
                         <label htmlFor="materialsNeeded">Materials Needed</label>

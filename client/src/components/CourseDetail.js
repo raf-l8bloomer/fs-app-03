@@ -12,41 +12,38 @@ import UserContext from "../context/UserContext";
  */
 
 const CourseDetail = () => {
+    // Pulls Authenticated User from UserContext
     const { authUser } = useContext(UserContext);
-    const courseId = useParams();
+    // setting up navigate for routing
     const navigate = useNavigate();
+    // Pulls course information by course id
+    const courseId = useParams();
 
+
+    // State
     const [course, setCourse] = useState(null);
 
+    // Fetches the specific course by id and sets it to course state
     useEffect(() => {
         async function fetchData() {
-            // await axios.get(`http://localhost:5000/api/courses/${courseId.id}`)
-            //     .then(response => {
-            //         // handle success
-            //         setCourse(response.data)
-            //     })
-            //     .catch(error => {
-            //         // handle error
-            //         console.log("Error fetching and parsing data in Course Detail", error);
-            //         navigate("*");
-            //     })
-       
-        try {
-            const response = await axios.get(`http://localhost:5000/api/courses/${courseId.id}`);
-            const fetchedCourse = response.data;
-            if (!fetchedCourse) {
-                navigate("*")
-            } else {
-                setCourse(fetchedCourse);
+            try {
+                const response = await axios.get(`http://localhost:5000/api/courses/${courseId.id}`);
+                const fetchedCourse = response.data;
+                if (!fetchedCourse) {
+                    navigate("/notfound")
+                } else {
+                    setCourse(fetchedCourse);
+                }
+            } catch (error) {
+                // handle error
+                console.log("Error fetching and parsing data in Course Detail", error);
+                navigate("/error");
             }
-        } catch (error) {
-            // handle error
-            console.log("Error fetching and parsing data in Course Detail", error);
-            navigate("*");
         }
-    }
         fetchData();
     }, [courseId, navigate]);
+
+    // deletes course only if Authorized User matches the Course Owner
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -54,6 +51,7 @@ const CourseDetail = () => {
         const encodedCredentials = btoa(`${authUser.emailAddress}:${authUser.password}`);
 
 
+        // sends delete request to the corresponding courses id
         const fetchOptions = {
             method: "DELETE",
             headers: {
@@ -68,7 +66,7 @@ const CourseDetail = () => {
             navigate("/")
         } catch (error) {
             console.log(error);
-            navigate("error")
+            navigate("/error")
 
         }
     }
@@ -104,8 +102,8 @@ const CourseDetail = () => {
                                     <p>{course.estimatedTime}</p>
                                     <h3 className="course--detail--title">Materials Needed</h3>
                                     <ul className="course--detail--list">
-                                   <ReactMarkdown children = {course.materialsNeeded}>
-                                   </ReactMarkdown> 
+                                        <ReactMarkdown children={course.materialsNeeded}>
+                                        </ReactMarkdown>
                                     </ul>
 
                                 </div>

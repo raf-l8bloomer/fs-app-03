@@ -1,13 +1,15 @@
 import React from 'react';
 
-
+/** 
+ * @returns Forbidden page if user is not authorized to the course
+*/
 const Forbidden = () => {
 
     return (
-        <div class="wrap">
-        <h2>Forbidden</h2>
-        <p>Oh oh! You can't access this page.</p>
-    </div>
+        <div className="wrap">
+            <h2>Forbidden</h2>
+            <p>Oh oh! You can't access this page.</p>
+        </div>
     )
 }
 

@@ -6,7 +6,7 @@ import axios from "axios";
 import UserContext from "../context/UserContext";
 
 /**
- * retrives detail from course "api/courses:id" + renders course
+ * retrieves detail from course "api/courses:id" + renders course
  * renders "Delete Course" button that sends a delete request to "api/courses/:id"
  * renders "Update Course" button for nav to "Update Course" screen
  */
@@ -20,18 +20,33 @@ const CourseDetail = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.get(`http://localhost:5000/api/courses/${courseId.id}`)
-                .then(response => {
-                    // handle success
-                    setCourse(response.data)
-                })
-                .catch(error => {
-                    // handle error
-                    console.log("Error fetching and parsing data in Course Detail", error);
-                })
+            // await axios.get(`http://localhost:5000/api/courses/${courseId.id}`)
+            //     .then(response => {
+            //         // handle success
+            //         setCourse(response.data)
+            //     })
+            //     .catch(error => {
+            //         // handle error
+            //         console.log("Error fetching and parsing data in Course Detail", error);
+            //         navigate("*");
+            //     })
+       
+        try {
+            const response = await axios.get(`http://localhost:5000/api/courses/${courseId.id}`);
+            const fetchedCourse = response.data;
+            if (!fetchedCourse) {
+                navigate("*")
+            } else {
+                setCourse(fetchedCourse);
+            }
+        } catch (error) {
+            // handle error
+            console.log("Error fetching and parsing data in Course Detail", error);
+            navigate("*");
         }
+    }
         fetchData();
-    }, [courseId]);
+    }, [courseId, navigate]);
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -53,6 +68,7 @@ const CourseDetail = () => {
             navigate("/")
         } catch (error) {
             console.log(error);
+            navigate("error")
 
         }
     }

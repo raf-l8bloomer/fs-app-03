@@ -75,7 +75,9 @@ const UserSignUp = () => {
                 <div className="validation--errors">
                     <h3>Validation Errors</h3>
                     <ul> {errors.map((error) => {
+                        {console.log(error)}
                         return<li>{error}</li>
+
                     })
                     }
                     </ul>

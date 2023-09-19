@@ -5,12 +5,13 @@
  */
 
 import { useRef, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 const UserSignIn = () => {
     const { actions } = useContext(UserContext);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const emailAddress = useRef(null);
     const password = useRef(null);
@@ -18,6 +19,10 @@ const UserSignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let from = "/";
+        if (location.state) {
+            from = location.state.from;
+        }
 
         const credentials = {
             emailAddress: emailAddress.current.value,
@@ -29,7 +34,7 @@ const UserSignIn = () => {
             const user = await actions.signIn(credentials);
             if (user) {
                 console.log('User is authenticated', user)
-                navigate('/');
+                navigate(from);
             } else {
                 console.log('the user is ' + user);
                 setErrors(["Sign-in was unsuccessful"])

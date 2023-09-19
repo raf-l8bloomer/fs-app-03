@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+
 
 
 /** retrieves list of courses from /api/courses and renders it
@@ -10,6 +11,7 @@ import { NavLink, Link } from "react-router-dom";
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
+    const navigate = (useNavigate());
 
     useEffect(() => {
         async function fetchData() {
@@ -21,11 +23,12 @@ const Courses = () => {
                 .catch(error => {
                     // handle error
                     console.log("Error fetching and parsing data", error);
+                    navigate("*")
                 })
         }
         
         fetchData();
-    }, []);
+    }, [navigate]);
 
     return (
         <div className="wrap main--grid">

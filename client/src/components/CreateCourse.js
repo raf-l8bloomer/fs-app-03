@@ -12,6 +12,7 @@ const CreateCourse = () => {
     const { authUser } = useContext(UserContext);
     const navigate = useNavigate();
 
+
     const courseTitle = useRef(null);
     const courseDescription = useRef(null);
     const estimatedTime = useRef(null);
@@ -51,10 +52,11 @@ const CreateCourse = () => {
                 setErrors(data.errors);
             } else {
                 throw new Error();
+
             }
         } catch (error) {
             console.log(error);
-            navigate("/");
+            navigate("*");
         }
 }
 
@@ -68,15 +70,16 @@ const CreateCourse = () => {
         <div className="wrap">
             <h2>Create Course</h2>
 
-            { errors.length ? (
+            {errors.length ? (
                 <div className="validation--errors">
-                <h3>Validation Errors</h3>
-                <ul>
-                    <li>Please provide a value for "Title"</li>
-                    <li>Please provide a value for "Description"</li>
-                </ul>
-            </div> 
-            ) : null }
+                    <h3>Validation Errors</h3>
+                    <ul> {errors.map((error) => {
+                        return<li key={Math.random()}>{error}</li>
+                    })
+                    }
+                    </ul>
+                </div>
+            ) : null}
 
             <form onSubmit={handleSubmit}>
                 <div className="main--flex">

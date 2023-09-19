@@ -38,10 +38,11 @@ const UpdateCourse = () => {
                 .catch(error => {
                     // handle error
                     console.log("Error fetching and parsing data in Course Detail", error);
+                    navigate("*")
                 })
         }
         fetchData();
-    }, [courseId]);
+    }, [courseId, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,7 +79,7 @@ const UpdateCourse = () => {
             }
         } catch (error) {
             console.log(error);
-            navigate("/");
+            navigate("error");
         }
     }
 
@@ -90,6 +91,18 @@ const UpdateCourse = () => {
     return (
         <div className="wrap">
             <h2>Update Course</h2>
+            {errors.length ? (
+                <div className="validation--errors">
+                    <h3>Validation Errors</h3>
+                    <ul> {errors.map((error) => {
+                        {console.log(error)}
+                        return<li>{error}</li>
+
+                    })
+                    }
+                    </ul>
+                </div>
+            ) : null}
             <form onSubmit={handleSubmit}>
                 <div className="main--flex">
                     <div>

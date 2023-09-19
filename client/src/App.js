@@ -11,9 +11,9 @@ import UserSignUp from "./components/UserSignUp";
 import UserSignOut from "./components/UserSignOut";
 import PrivateRoute from "./components/PrivateRoute";
 
-import NotFound from "./components/NotFound";
-import Forbidden from "./components/Forbidden";
-import UnhandledError from "./components/UnhandledError";
+import NotFound from "./components/error-handling/NotFound";
+import Forbidden from "./components/error-handling/Forbidden";
+import UnhandledError from "./components/error-handling/UnhandledError";
 
 function App() {
 

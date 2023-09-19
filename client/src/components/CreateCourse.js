@@ -60,6 +60,15 @@ const CreateCourse = () => {
         }
 }
 
+const errorKey = (errorArray) => {
+    console.log(errorArray);
+    const errorList = []
+    for( let i = 0; i < errorArray.length; i++) {
+        console.log(errorArray[i]);
+         errorList.push(<li key={i}> {errorArray[i]} </li> )
+    }
+    return errorList
+}
 
     const handleCancel = (e) => {
         e.preventDefault();
@@ -73,11 +82,7 @@ const CreateCourse = () => {
             {errors.length ? (
                 <div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <ul> {errors.map((error) => {
-                        return<li key={Math.random()}>{error}</li>
-                    })
-                    }
-                    </ul>
+                    <ul>{errorKey(errors)}</ul>
                 </div>
             ) : null}
 

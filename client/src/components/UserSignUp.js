@@ -59,13 +59,20 @@ const UserSignUp = () => {
         }
     }
 
+    const errorKey = (errorArray) => {
+        console.log(errorArray);
+        const errorList = []
+        for( let i = 0; i < errorArray.length; i++) {
+            console.log(errorArray[i]);
+             errorList.push(<li key={i}> {errorArray[i]} </li> )
+        }
+        return errorList
+    }
+
     const handleCancel = (e) => {
         e.preventDefault();
         navigate("/")
     }
-
-
-
 
     return (
         <div className="form--centered">
@@ -74,13 +81,7 @@ const UserSignUp = () => {
             {errors.length ? (
                 <div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <ul> {errors.map((error) => {
-                        {console.log(error)}
-                        return<li>{error}</li>
-
-                    })
-                    }
-                    </ul>
+                    <ul>{errorKey(errors)}</ul>
                 </div>
             ) : null}
 
